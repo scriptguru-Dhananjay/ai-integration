@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import chatRoute from "./routes/chat.js";
+import extractRoute from "./routes/extract.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.get("/", (req, res) => {
 
 
 app.use("/chat", chatRoute);
+app.use("/extract", extractRoute);
 
 
 app.use((err, req, res, next) => {
