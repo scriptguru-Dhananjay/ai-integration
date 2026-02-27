@@ -33,18 +33,10 @@ export async function emailAnalyze(text) {
             {
                 role: "system",
                 content: `
-                    You are an email analysis assistant.
-                    
                     Analyze the email and return:
                     - tone (formal | neutral | urgent)
                     - one sentence summary
                     - suggested professional reply
-
-                    IMPORTANT:
-                    - Detect the language of the input email.
-                    - The summary MUST be in the same language as the email.
-                    - The suggestedReply MUST be in the same language as the email.
-                    - Do NOT translate unless the email itself is mixed language.
 
                     Return only valid JSON matching the schema.
 `,
