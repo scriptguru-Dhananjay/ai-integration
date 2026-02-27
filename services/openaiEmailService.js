@@ -20,9 +20,11 @@ export async function emailAnalyze(text) {
         throw { status: 400, message: "Email text is required" };
     }
 
-    if (text.length > 8000) {
-        throw { status: 400, message: "Email exceeds 8000 character limit" };
+    if (text.length > 1000) {
+        throw { status: 400, message: "Email exceeds 1000 character limit" };
     }
+
+    console.log("Text length:", text.length);
 
     const response = await client.chat.completions.create({
         model: "gpt-4o-mini",
