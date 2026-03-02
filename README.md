@@ -51,10 +51,53 @@ Result:-
 {"tone":"urgent","summary":"The user is requesting immediate assistance to unlock their account as they are unable to log in.","suggestedReply":"Dear [User's Name],\n\nThank you for reaching out to us. We understand the urgency of your situation and are here to help. Please provide us with your account details so we can assist you in regaining access as quickly as possible.\n\nBest regards,\n[Your Name]\nSupport Team","tokens":{"prompt":120,"completion":94,"total":214},"costUsd":0.000074,"latencyMs":2420}
 
 
+Day 5: Build a Node.js AI Knowledge Base Assistant where users upload documents and ask questions. The system should return answers strictly from the uploaded documents with the source chunk cited.
+
+Currently, chunking, vector database, and RAG are not used. This is a basic approach to demonstrate file upload and answer extraction from the file.
+
+Testing is limited to small paragraph files (under 300 characters) to avoid heavy load on the LLM.
+
+Endpoints
+
+Upload: https://ai-integration-pgd3.onrender.com/upload
+
+Question: https://ai-integration-pgd3.onrender.com/question/ask
 
 
+File Upload
+
+Method: POST
+
+Body → form-data
+
+Key: file
+
+Type: file
+
+Currently supports only .txt files.
 
 
+Ask Question
+Body → raw (JSON)
 
+{
+  "question": "what is ai assistant do"
+}
+
+Sample Result:-
+{
+  "answer": "The AI Knowledge Base Assistant allows users to upload documents and ask questions. The system answers only from the uploaded document and provides the exact source snippet.",
+  "sources": [
+    {
+      "snippet": "The AI Knowledge Base Assistant allows users to upload documents and ask questions."
+    }
+  ],
+  "tokens": {
+    "prompt": 190,
+    "completion": 53,
+    "total": 243
+  },
+  "latencyMs": 5865
+}
 
 
