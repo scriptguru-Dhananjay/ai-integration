@@ -4,6 +4,8 @@ import chatRoute from "./routes/chat.js";
 import extractRoute from "./routes/extract.js";
 import intentRoute from "./routes/intent.js";
 import emailRoute from "./routes/email.js";
+import uploadRoute from "./routes/upload.js";
+import questionRoute from "./routes/question.js";
 
 const app = express();
 
@@ -18,7 +20,8 @@ app.use("/chat", chatRoute);
 app.use("/extract", extractRoute);
 app.use("/intent", intentRoute);
 app.use("/email", emailRoute);
-
+app.use("/upload", uploadRoute);
+app.use("/question", questionRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);
