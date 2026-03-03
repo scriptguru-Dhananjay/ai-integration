@@ -101,3 +101,37 @@ Sample Result:-
 }
 
 
+Day 6: Build a Node.js AI Knowledge Base Assistant where users upload documents and ask questions. The system should return answers strictly from the uploaded documents with the source chunk cited.
+
+
+End-points:-
+
+Upload:-https://ai-integration-pgd3.onrender.com/processDocument
+
+Question:-https://ai-integration-pgd3.onrender.com/ask
+
+
+
+
+File Upload
+
+Method: POST
+
+Body → form-data
+
+Key: file
+
+Type: file
+
+Currently supports only .txt files.
+
+
+Sample result:-
+
+
+{ "question":"What does an AI Knowledge Base Assistant allow users to do?" }
+
+
+Response:-
+
+{"answer":"An AI Knowledge Base Assistant allows users to upload documents and ask questions based strictly on those documents.","sources":[{"chunkId":"chunk_0","snippet":"An AI Knowledge Base Assistant is a system that allows users to upload documents and ask questions based strictly on those documents."}],"grounded":true,"hallucinated":false,"tokens":{"prompt":434,"completion":59,"total":493}}
