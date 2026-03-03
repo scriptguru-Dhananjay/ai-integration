@@ -1,0 +1,141 @@
+import OpenAI from "openai";
+import { createEmbedding } from "./openaiEmbeddingService.js";
+import { searchSimilar } from "./openaiVectorStore.js";
+import { checkHallucination } from "./openaiHallucinationCheck.js";
+
+const client = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+
+export async function askQuestion(question) {
+
+    if (!process.env.OPENAI_API_KEY) {
+        throw { status: 500, message: "OPEN AI key is missing" };
+    }
+
+
+    if (!question || typeof question !== "string") {
+        throw { status: 400, message: "question is required" };
+    }
+
+
+    const queryEmbedding = await createEmbedding(question);
+
+
+    const topChunks = searchSimilar(queryEmbedding, 3);
+
+    if (!topChunks.length) {
+        return {
+            answer: "Answer not found in the document.",
+            sources: [],
+            grounded: true,
+            hallucinated: false,
+            tokens: { prompt: 0, completion: 0, total: 0 },
+        };
+    }
+
+    console.log("Top chunks", topChunks);
+
+    const context = topChunks
+        .map(
+            (c) => `CHUNK_ID: ${c.chunkId}
+TEXT: ${c.text}`
+        )
+        .join("\n\n");
+
+    const response = await client.chat.completions.create({
+        model: "gpt-4o-mini",
+        temperature: 0,
+        response_format: {
+            type: "json_schema",
+            json_schema: {
+                name: "kb_answer",
+                schema: {
+                    type: "object",
+                    additionalProperties: false,
+                    required: ["answer", "sources"],
+                    properties: {
+                        answer: { type: "string" },
+                        sources: {
+                            type: "array",
+                            items: {
+                                type: "object",
+                                additionalProperties: false,
+                                required: ["chunkId", "snippet"],
+                                properties: {
+                                    chunkId: { type: "string" },
+                                    snippet: { type: "string" },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        messages: [
+            {
+                role: "system",
+                content: `
+You are a strict knowledge base assistant.
+
+RULES (VERY IMPORTANT):
+- Answer ONLY from the provided context
+- Do NOT use outside knowledge
+- If answer not found, say: "Answer not found in the document."
+- Always cite the supporting chunk
+- Be concise
+        `,
+            },
+            {
+                role: "user",
+                content: `
+CONTEXT:
+${context}
+
+QUESTION:
+${question}
+        `,
+            },
+        ],
+    });
+
+    const usage = response.usage || {};
+    const tokens = {
+        prompt: usage.prompt_tokens || 0,
+        completion: usage.completion_tokens || 0,
+        total: usage.total_tokens || 0,
+    };
+
+    console.log("Tokens usage", tokens);
+
+    const content = response.choices[0].message.content;
+
+    let parsed;
+
+    try {
+        parsed = JSON.parse(content);
+    } catch {
+        throw { status: 500, message: "Invalid JSON from model" };
+    }
+
+
+    if (!Array.isArray(parsed.sources)) {
+        throw { status: 500, message: "Invalid sources format" };
+    }
+
+
+    const validChunkIds = new Set(topChunks.map(c => c.chunkId));
+
+    parsed.sources = parsed.sources.filter(src =>
+        validChunkIds.has(src.chunkId)
+    );
+
+    const hallucinated = checkHallucination(parsed, topChunks);
+
+    return {
+        ...parsed,
+        grounded: !hallucinated,
+        hallucinated,
+        tokens,
+    };
+}
