@@ -135,3 +135,46 @@ Sample result:-
 Response:-
 
 {"answer":"An AI Knowledge Base Assistant allows users to upload documents and ask questions based strictly on those documents.","sources":[{"chunkId":"chunk_0","snippet":"An AI Knowledge Base Assistant is a system that allows users to upload documents and ask questions based strictly on those documents."}],"grounded":true,"hallucinated":false,"tokens":{"prompt":434,"completion":59,"total":493}}
+
+
+Day 7:-Implement a guardrail module: input length limit, output schema validation, retry logic for transient failures, and timeout handling. AI knowldege base assistant 
+
+
+End-points:-
+
+Upload:-https://ai-integration-pgd3.onrender.com/processDocument
+
+Question:-https://ai-integration-pgd3.onrender.com/ask
+
+
+:-File Upload
+
+Method: POST
+
+Body → form-data
+
+Key: file
+
+Type: file
+
+Currently supports only .txt files.
+
+
+Sample result:-
+
+
+{ "question":"What does an AI Knowledge Base Assistant allow users to do?" }
+
+
+Response:-
+
+{"answer":"An AI Knowledge Base Assistant allows users to upload documents and ask questions based strictly on those documents.","sources":[{"chunkId":"chunk_0","snippet":"An AI Knowledge Base Assistant is a system that allows users to upload documents and ask questions based strictly on those documents."}],"grounded":true,"hallucinated":false,"tokens":{"prompt":434,"completion":59,"total":493}}
+
+
+
+:-A guardrail module was implemented in the AI knowldege based assistant to improve system reliability, prevent crashes, and ensure predictable responses when interacting with the LLM. Guardrails protect the API from invalid inputs, unexpected model outputs, and external API failures.
+
+Input Length Validation
+Output Schema Validation
+Retry Logic
+Timeout Handling
