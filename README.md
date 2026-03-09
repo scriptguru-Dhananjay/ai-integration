@@ -178,3 +178,30 @@ Input Length Validation
 Output Schema Validation
 Retry Logic
 Timeout Handling
+
+
+
+Day 8:-
+
+Build an AI CRM Assistant that summarizes lead notes, suggests follow-up actions, and scores lead sentiment. one concrete follow-up, sentiment (positive/neutral/negative). Structured output.
+
+Method POST:-
+
+Endpoints:-https://ai-integration-pgd3.onrender.com/crm/analyze-lead
+
+Example body:-
+
+{
+  "name": "Rahul Sharma",
+  "company": "TechNova",
+  "notes": "Interested in our enterprise plan. Asked about pricing and integration with Salesforce. Said they may finalize next month."
+}
+
+
+Response:-
+
+{
+  "summary": "Rahul Sharma from TechNova is evaluating the enterprise plan. He asked about pricing and Salesforce integration and mentioned that a decision may be made next month.",
+  "suggestedFollowUp": "Send detailed enterprise pricing and Salesforce integration documentation.",
+  "sentimentScore": "positive"
+}
