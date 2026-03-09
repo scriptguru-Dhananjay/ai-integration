@@ -8,6 +8,7 @@ import uploadRoute from "./routes/upload.js";
 import questionRoute from "./routes/question.js";
 import askRoute from "./routes/ask.js";
 import documentRoute from "./routes/processDocument.js";
+import crmRoute from "./routes/crm.js";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/upload", uploadRoute);
 app.use("/question", questionRoute);
 app.use("/ask", askRoute);
 app.use("/processDocument", documentRoute);
+app.use("/crm", crmRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);
