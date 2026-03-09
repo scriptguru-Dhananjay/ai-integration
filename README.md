@@ -200,8 +200,4 @@ Example body:-
 
 Response:-
 
-{
-  "summary": "Rahul Sharma from TechNova is evaluating the enterprise plan. He asked about pricing and Salesforce integration and mentioned that a decision may be made next month.",
-  "suggestedFollowUp": "Send detailed enterprise pricing and Salesforce integration documentation.",
-  "sentimentScore": "positive"
-}
+{"summary":"Rahul Sharma from TechNova is interested in the enterprise plan and inquired about pricing and integration with Salesforce. He mentioned that a decision may be made next month.","suggestedFollowUp":"Send detailed pricing information and integration options with Salesforce to Rahul next week.","sentimentScore":"positive","tokens":{"prompt":158,"completions":61,"total":219},"latencyMs":1522}
