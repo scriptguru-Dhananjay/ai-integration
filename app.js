@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import { connectDB } from "./config/db.js";
 import chatRoute from "./routes/chat.js";
 import extractRoute from "./routes/extract.js";
 import intentRoute from "./routes/intent.js";
@@ -9,9 +10,11 @@ import questionRoute from "./routes/question.js";
 import askRoute from "./routes/ask.js";
 import documentRoute from "./routes/processDocument.js";
 import crmRoute from "./routes/crm.js";
+import workflowRoute from "./routes/workflow.js";
+
 
 const app = express();
-
+connectDB();  
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -28,6 +31,7 @@ app.use("/question", questionRoute);
 app.use("/ask", askRoute);
 app.use("/processDocument", documentRoute);
 app.use("/crm", crmRoute);
+app.use("/workflow", workflowRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);

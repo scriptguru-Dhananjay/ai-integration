@@ -201,3 +201,49 @@ Example body:-
 Response:-
 
 {"summary":"Rahul Sharma from TechNova is interested in the enterprise plan and inquired about pricing and integration with Salesforce. He mentioned that a decision may be made next month.","suggestedFollowUp":"Send detailed pricing information and integration options with Salesforce to Rahul next week.","sentimentScore":"positive","tokens":{"prompt":158,"completions":61,"total":219},"latencyMs":1522}
+
+
+
+Day 9:-
+
+Method POST:-
+
+Endpoints:-
+
+Example:-
+
+body:-
+
+
+{
+"text":"The API documentation link on the help page leads to a 404 error."
+}
+
+Response:-
+{"success":true,"ticket":{"company":null,"person":null,"product":"API documentation","issue":"The API documentation link on the help page leads to a 404 error.","category":"bug","summary":"The API documentation link on the help page is broken, resulting in a 404 error.","rawText":"The API documentation link on the help page leads to a 404 error.","tokens":{"prompt":182,"completion":56,"total":238},"_id":"69afd4eb5197810e69aac315","createdAt":"2026-03-10T08:23:07.172Z","__v":0},"latencyMs":1529}
+
+
+
+
+
+Total:-20
+
+Success:- 18
+
+Failed:-2
+
+Success rate:-90%
+
+
+
+
+Two test cases failed:
+
+Missing person in text:
+When the text does not contain a person’s name and uses a generic term like "user", the system incorrectly extracts the person as "user" instead of leaving it empty.
+
+Ambiguous classification:
+When the text is ambiguous, the system fails to correctly determine whether the request is a feature or a question.
+
+Solution:
+Improve the prompt instructions and specify that the person/customer field should be null if no specific person is mentioned in the text. This will help the model avoid assigning generic terms like
