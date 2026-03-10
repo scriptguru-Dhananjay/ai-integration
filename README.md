@@ -204,11 +204,11 @@ Response:-
 
 
 
-Day 9:-
+Day 9:-Build a multi-step AI workflow: (1) extract data from raw text, (2) classify it, (3) generate a summary, (4) store the result in a DB. Pipeline must complete with > 90% success rate on test set.
 
 Method POST:-
 
-Endpoints:-
+Endpoints:-https://ai-integration-pgd3.onrender.com/workflow/process-ticket
 
 Example:-
 
