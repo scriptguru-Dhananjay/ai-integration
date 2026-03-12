@@ -247,3 +247,56 @@ When the text is ambiguous, the system fails to correctly determine whether the 
 
 Solution:
 Improve the prompt instructions and specify that the person/customer field should be null if no specific person is mentioned in the text. This will help the model avoid assigning generic terms like
+
+
+Day 10:-Implement an agent pattern using LangChain for Node: an AI that can choose and use at least one tool (e.g. search) and return a final answer
+
+
+LLM models can’t access real-time or external data on their own. When they need up-to-date information, they call a tool through LangChain. The tool (like a web search) fetches the data, LangChain passes it back to the LLM, and the LLM uses it to generate the response. In this way, LangChain acts as a mediator, bridging the gap between the LLM and external tools.
+
+
+Working:-
+
+
+
+User asks a question requiring real-time information.
+
+LLM (model) checks for context and calls LangChain to use a tool.
+
+LangChain invokes the web search tool, which fetches the data.
+
+The tool returns the data to LangChain.
+
+LangChain feeds this data back to the LLM.
+
+LLM generates the final answer and sends it to the user.
+
+:-Token consumption is higher when a tool is used because the LLM is effectively called three times during this process.
+
+
+
+POST Method:-
+
+Endpoint:-https://ai-integration-pgd3.onrender.com/agent
+
+
+
+
+
+Example:-
+
+
+
+body:-
+ 
+User input:-
+
+{
+"message":"current weather of new delhi"
+}
+
+
+Resposne:-
+
+{"answer":"The current weather in New Delhi is partly cloudy with a temperature of 33°C (91°F). The wind is blowing from the west-northwest at 12.6 km/h (7.8 mph), and the humidity is at 20%.","toolsUsed":["search"],"tokens":{"prompt":845,"completion":68,"total":913},"latencyMs":6855}
+
