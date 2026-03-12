@@ -11,6 +11,7 @@ import askRoute from "./routes/ask.js";
 import documentRoute from "./routes/processDocument.js";
 import crmRoute from "./routes/crm.js";
 import workflowRoute from "./routes/workflow.js";
+import agentRoute from "./routes/agent.js";
 
 
 const app = express();
@@ -32,6 +33,7 @@ app.use("/ask", askRoute);
 app.use("/processDocument", documentRoute);
 app.use("/crm", crmRoute);
 app.use("/workflow", workflowRoute);
+app.use("/agent",agentRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);
