@@ -300,3 +300,83 @@ Resposne:-
 
 {"answer":"The current weather in New Delhi is partly cloudy with a temperature of 33°C (91°F). The wind is blowing from the west-northwest at 12.6 km/h (7.8 mph), and the humidity is at 20%.","toolsUsed":["search"],"tokens":{"prompt":845,"completion":68,"total":913},"latencyMs":6855}
 
+
+
+Day 11:-
+
+Compare two GPT models (e.g. gpt-4o vs gpt-4o-mini) on the same set of prompts. Produce comparison report: cost per request, latency, simple quality assessment. Deliver cost/speed/quality table.
+
+
+Endpoint:-https://ai-integration-pgd3.onrender.com/model
+
+
+POST method:-
+
+
+Example:-
+
+body:-
+
+
+
+{
+"prompts": [
+"hello "
+]
+}
+
+
+resposne:-
+
+
+{"results":{"count":2,"results":[{"model":"gpt-5-nano","temperature":1,"prompt":"hello ","latencyMs":2882,"tokens":{"prompt_tokens":8,"completion_tokens":246,"total_tokens":254,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":192,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}},"cost":0.0000988,"output":"Hello! How can I help you today? If you’re not sure, tell me what you’re looking for—information, writing help, problem solving, coding, planning, or anything else—and I’ll tailor my answer."},{"model":"gpt-4o-mini","temperature":0,"prompt":"hello ","latencyMs":1226,"tokens":{"prompt_tokens":9,"completion_tokens":9,"total_tokens":18,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}},"cost":0.000006749999999999999,"output":"Hello! How can I assist you today?"}],"summary":{"gpt-5-nano":{"requests":1,"totalCost":0.0000988,"totalLatency":2882,"totalTokens":254,"avgCost":0.0000988,"avgLatency":2882,"avgTokens":254},"gpt-4o-mini":{"requests":1,"totalCost":0.000006749999999999999,"totalLatency":1226,"totalTokens":18,"avgCost":0.000006749999999999999,"avgLatency":1226,"avgTokens":18}}}}
+
+
+
+
+
+
+Comparison Note: GPT-5-nano vs GPT-4o-mini
+
+Token Consumption & Cost
+
+GPT-5-nano often uses more tokens than GPT-4o-mini for the same prompt.
+Main reason: Nano is less precise and less concise, adds extra explanations, repetitions, and polite/introductory text.
+Not due to temperature, reasoning tokens, or mini lacking reasoning.
+More tokens → higher cost per request, even if nano’s per-token price is cheaper.
+
+Efficiency
+
+GPT-4o-mini is more efficient per task: compresses information, follows instructions strictly, avoids redundancy.
+Nano may produce verbose outputs, making it slower and more expensive in practice.
+
+Instruction Following
+
+Nano may ignore strict instructions (e.g., “Answer in 2 sentences”) -> longer outputs.
+Mini obeys output constraints better -> fewer tokens.
+
+Reasoning & Intelligence
+
+Both models are capable of reasoning.
+
+Mini appears more intelligent and precise, nano is faster and lightweight but less concise.
+
+Reasoning tokens alone do not determine output length or cost.
+
+
+Note: GPT-5 series only supports temperature = 1 and does not support temperature = 0. As a result, GPT-5-nano tends to produce less concise answers with extra explanations, which increases token usage.
+
+
+Business Case:
+
+GPT-5-nano:
+
+Suitable for high-volume tasks requiring fast responses.
+
+Ideal for internal tools, lightweight automation, and scenarios where verbose or slightly longer outputs are acceptable.
+
+GPT-4o-mini:
+
+Best for simple chatbots and standard customer support.
+
+Efficient for tasks that need concise, accurate, and structured responses.
