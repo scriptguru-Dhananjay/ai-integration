@@ -380,3 +380,62 @@ GPT-4o-mini:
 Best for simple chatbots and standard customer support.
 
 Efficient for tasks that need concise, accurate, and structured responses.
+
+
+
+
+
+
+Day 12:-build node app that every RAG answer is returned in a structured format: answer, confidence (high/medium/low), sources (list of chunk ids or snippets). Validate schema on every response; target 95%+ valid structured output.
+
+
+
+Initial testing showed that the system produced hallucinated responses when the answer was not clearly available in the document. After refining the prompt, hallucinations were eliminated.
+
+Now, when the answer is not present in the document, the system correctly returns "Answer not found in the document." Previously, ambiguous questions sometimes triggered hallucinated outputs, but after the prompt fix, the system no longer generates unsupported information.
+
+When the answer exists in the document, the system consistently returns accurate, grounded responses based on the retrieved content.
+
+Overall success rate is greater than 95%.
+
+
+
+POST method:-
+
+
+
+End-points:-
+
+
+Upload:-https://ai-integration-pgd3.onrender.com/UploadDoc
+
+
+Question:-https://ai-integration-pgd3.onrender.com/askRag/ask
+
+
+
+:-File Upload
+
+
+Method: POST
+
+
+Body → form-data
+
+
+Key: file
+
+
+Type: file
+
+
+Currently supports only .txt files.
+
+Example:-
+
+{ "question":"Documents split into what?" }
+
+
+Response:-
+
+{"answer":"Documents are split into smaller chunks.","confidence":"high","sources":[{"chunkId":"c3","snippet":"The system works using Retrieval-Augmented Generation (RAG). First, documents are split into smaller chunks."}],"attempts":1}

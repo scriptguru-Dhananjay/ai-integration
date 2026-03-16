@@ -13,6 +13,8 @@ import crmRoute from "./routes/crm.js";
 import workflowRoute from "./routes/workflow.js";
 import agentRoute from "./routes/agent.js";
 import modelRoute from "./routes/model.js";
+import uploadRouteDoc from "./routes/uploadDoc.js";
+import askRagRoute from "./routes/askRag.js";
 
 
 const app = express();
@@ -36,6 +38,8 @@ app.use("/crm", crmRoute);
 app.use("/workflow", workflowRoute);
 app.use("/agent",agentRoute);
 app.use("/model",modelRoute);
+app.use("/uploadDoc", uploadRouteDoc);
+app.use("/askRag", askRagRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);
