@@ -439,3 +439,51 @@ Example:-
 Response:-
 
 {"answer":"Documents are split into smaller chunks.","confidence":"high","sources":[{"chunkId":"c3","snippet":"The system works using Retrieval-Augmented Generation (RAG). First, documents are split into smaller chunks."}],"attempts":1}
+
+
+
+Day 13:-Combine RAG with function calling: user question to retrieve chunks and pass as context; model can optionally call a tool then produce final answer. 
+
+
+Endpoint:-
+
+Upload:-https://ai-integration-pgd3.onrender.com/UploadDoc
+
+Question:-https://ai-integration-pgd3.onrender.com/rag/ask-tool
+
+
+Example:-
+
+
+
+:-File Upload
+
+Method: POST
+
+Body → form-data
+
+Key: file
+
+Type: file
+
+Currently supports only .txt files.
+
+
+{
+"message": "Document stored",
+"characters": 991
+}
+ 
+
+Sample result:-
+ 
+
+{
+"question": "What should the assistant respond if the answer is not present in the document"
+}
+
+
+Response:-
+
+
+{"answer":"The assistant should reply: \"Answer not found in the document.\"","toolUsed":false,"tokens":{"prompt":358,"completion":14,"total":372}}
