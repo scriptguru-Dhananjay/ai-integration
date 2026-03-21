@@ -15,6 +15,7 @@ import agentRoute from "./routes/agent.js";
 import modelRoute from "./routes/model.js";
 import uploadRouteDoc from "./routes/uploadDoc.js";
 import askRagRoute from "./routes/askRag.js";
+import ragRoute from "./routes/rag.js";
 
 
 const app = express();
@@ -40,6 +41,7 @@ app.use("/agent",agentRoute);
 app.use("/model",modelRoute);
 app.use("/uploadDoc", uploadRouteDoc);
 app.use("/askRag", askRagRoute);
+app.use("/rag",ragRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);
