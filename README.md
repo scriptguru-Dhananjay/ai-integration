@@ -487,3 +487,86 @@ Response:-
 
 
 {"answer":"The assistant should reply: \"Answer not found in the document.\"","toolUsed":false,"tokens":{"prompt":358,"completion":14,"total":372}}
+
+
+
+Day 14:-ombine RAG with function calling: user question to retrieve chunks and pass as context; model can optionally call a tool then produce final answer. used proper tool to fetch external information
+
+
+
+:-Implemented proper prompt structuring to enable tool calling within the system.
+
+:-Developed initial tool integration using Tavily Search for web-based information retrieval.
+
+:-Configured the system to trigger tool calls when relevant context is not available in the document.
+
+:-Ensured that, in such cases, the tool fetches external information to supplement the response.
+
+Prompt i used:-
+
+
+You are a RAG assistant.
+
+
+Rules:
+- First try to answer using the provided context
+- If context is insufficient, call the search tool
+- AFTER receiving tool response:
+- You MUST use the tool result to answer
+- Extract only relevant facts
+- Do NOT copy raw results blindly
+- Always return a helpful final answer
+
+ 
+
+Endpoint:-
+
+Upload:-https://ai-integration-pgd3.onrender.com/UploadDoc
+
+Question:-https://ai-integration-pgd3.onrender.com/rag/ask-tool
+
+
+Example:-
+
+
+
+
+:-File Upload
+
+
+Method: POST
+
+
+Body → form-data
+
+
+Key: file
+
+
+Type: file
+
+
+Currently supports only .txt files.
+
+
+
+{
+"message": "Document stored",
+"characters": 991
+}
+
+
+
+Sample result:-
+
+
+{
+"question":"What is an AI Knowledge Base Assistant?"
+}
+
+
+Response:-
+
+
+
+{"answer":"An AI Knowledge Base Assistant is a system that allows users to upload documents and ask questions based strictly on those documents. It operates using Retrieval-Augmented Generation (RAG), where documents are split into smaller chunks, converted into embeddings, and stored in a vector database. When a user asks a question, the system retrieves the most relevant chunks using cosine similarity based on the question's embedding. The assistant answers only from the retrieved context, ensuring strict grounding to reduce hallucinations, with a target hallucination rate below 10 percent.","toolUsed":false,"sourceChunks":[{"id":"c1","text":"AI Knowledge Base Assistant\n\nAn AI Knowledge Base Assistant is a system that allows users to upload documents and ask questions based strictly on those documents.\n\nThe system works using Retrieval-Augmented Generation (RAG). First, documents are split into smaller chunks. Each chunk is converted into embeddings and stored in a vector database.\n\nWhen a user asks a question, the system converts the question into an embedding and retrieves the most relevant chunks using cosine similarity.\n\nThe assistant must answer only from the retrieved context. If the answer is not present in the document, the assistant must reply: \"Answer not found in the document.\"\n\nThe system also returns the source chunk ID and snippet used to generate the answer.\n\nStrict grounding is important to reduce hallucinations. The target hallucination rate for the system should be below 10 percent.\n\nThis project typically uses the gpt-4o-mini model for generating answers and text-embedding-3-small for embeddings."}],"tokens":{"prompt_tokens":317,"completion_tokens":106,"total_tokens":423,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}}}
