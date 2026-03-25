@@ -570,3 +570,39 @@ Response:-
 
 
 {"answer":"An AI Knowledge Base Assistant is a system that allows users to upload documents and ask questions based strictly on those documents. It operates using Retrieval-Augmented Generation (RAG), where documents are split into smaller chunks, converted into embeddings, and stored in a vector database. When a user asks a question, the system retrieves the most relevant chunks using cosine similarity based on the question's embedding. The assistant answers only from the retrieved context, ensuring strict grounding to reduce hallucinations, with a target hallucination rate below 10 percent.","toolUsed":false,"sourceChunks":[{"id":"c1","text":"AI Knowledge Base Assistant\n\nAn AI Knowledge Base Assistant is a system that allows users to upload documents and ask questions based strictly on those documents.\n\nThe system works using Retrieval-Augmented Generation (RAG). First, documents are split into smaller chunks. Each chunk is converted into embeddings and stored in a vector database.\n\nWhen a user asks a question, the system converts the question into an embedding and retrieves the most relevant chunks using cosine similarity.\n\nThe assistant must answer only from the retrieved context. If the answer is not present in the document, the assistant must reply: \"Answer not found in the document.\"\n\nThe system also returns the source chunk ID and snippet used to generate the answer.\n\nStrict grounding is important to reduce hallucinations. The target hallucination rate for the system should be below 10 percent.\n\nThis project typically uses the gpt-4o-mini model for generating answers and text-embedding-3-small for embeddings."}],"tokens":{"prompt_tokens":317,"completion_tokens":106,"total_tokens":423,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}}}
+
+
+
+
+Day 15:-Configure a timeout for LLM calls to ensure the system never hangs. If a timeout occurs, return a cached response (if available) or a degraded response (HTTP 504 or a clear error message). 
+
+Currently, the cache does not expire automatically; it persists until the server is restarted or entries are manually deleted. This setup is intended for testing purposes only. In a production environment, cache entries should expire after a defined time period (TTL) to prevent stale data and manage memory efficiently.
+
+For testing timeout scenarios, a short timeout (e.g., 1 second) is used. This helps simulate timeout errors and ensures the system correctly returns a 504 status response when the LLM call exceeds the allowed time.
+
+
+
+
+
+Exmaple:-
+
+
+
+Endpoint:-https://ai-integration-pgd3.onrender.com/askllm
+
+Sample response:-
+
+Question:-
+
+
+
+{
+"question": "What is AI assistant"
+}
+
+
+Reposne:-
+
+
+
+{"source":"llm","answer":"An AI assistant is a software application that uses artificial intelligence to perform tasks, provide information, or assist users in various activities. These tasks can include answering questions, managing schedules, providing recommendations, and automating repetitive tasks. AI assistants can be found in various forms, such as chatbots, virtual assistants (like Siri or Alexa), and customer service tools. They aim to enhance user experience and improve efficiency through natural language processing and machine learning.","usage":{"prompt_tokens":39,"completion_tokens":88,"total_tokens":127,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}}}

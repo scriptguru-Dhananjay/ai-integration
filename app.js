@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import rateLimit from "express-rate-limit";
 import { connectDB } from "./config/db.js";
 import chatRoute from "./routes/chat.js";
 import extractRoute from "./routes/extract.js";
@@ -16,11 +17,19 @@ import modelRoute from "./routes/model.js";
 import uploadRouteDoc from "./routes/uploadDoc.js";
 import askRagRoute from "./routes/askRag.js";
 import ragRoute from "./routes/rag.js";
+import askllmRoute from "./routes/askllm.js";
 
 
 const app = express();
 connectDB();  
 app.use(express.json());
+
+
+const limiter = rateLimit({
+  windowMs: 30 * 1000,
+  max: 3,
+  message: "Too many requests"
+})
 
 app.get("/", (req, res) => {
   res.send("Server is running");
@@ -42,6 +51,7 @@ app.use("/model",modelRoute);
 app.use("/uploadDoc", uploadRouteDoc);
 app.use("/askRag", askRagRoute);
 app.use("/rag",ragRoute);
+app.use("/askllm", askllmRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);
