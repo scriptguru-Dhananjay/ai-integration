@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { getDocument, hasDocument } from "./openaidocumentStore.js";
+import validateOutput from "../utils/validateOutput.js";
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -122,6 +123,8 @@ ${question}
       const parsed = JSON.parse(content);
 
       validateSchema(parsed, chunks);
+
+      validateOutput(parsed);
 
       return {
         ...parsed,

@@ -1,10 +1,11 @@
 import express from "express";
 import { handleAsk } from "../services/openaillmService.js";
+import validateInput from "../middleware/validateInput.js";
 
 
 const router = express.Router();
 
-router.post("/", async(req, res) => {
+router.post("/", validateInput, async(req, res) => {
 
     const {question} = req.body;
 

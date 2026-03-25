@@ -1,9 +1,10 @@
 import express from "express";
 import { askRagWithTool } from "../services/openaiRagToolService.js";
+import validateInput from "../middleware/validateInput.js";
 
 const router = express.Router();
 
-router.post("/ask-tool", async (req, res) => {
+router.post("/ask-tool", validateInput, async (req, res) => {
   try {
     const { question } = req.body;
 

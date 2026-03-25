@@ -606,3 +606,13 @@ Reposne:-
 
 
 {"source":"llm","answer":"An AI assistant is a software application that uses artificial intelligence to perform tasks, provide information, or assist users in various activities. These tasks can include answering questions, managing schedules, providing recommendations, and automating repetitive tasks. AI assistants can be found in various forms, such as chatbots, virtual assistants (like Siri or Alexa), and customer service tools. They aim to enhance user experience and improve efficiency through natural language processing and machine learning.","usage":{"prompt_tokens":39,"completion_tokens":88,"total_tokens":127,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}}}
+
+
+
+Day 15:-
+
+
+Implement input and output validation across all RAG workflows. Additionally, test failure scenarios to identify potential crashes, and ensure proper error handling and recovery mechanisms are in place.
+
+
+In this create middleware for input and output validation and add that validation in all rag and the endpoint will same as before
