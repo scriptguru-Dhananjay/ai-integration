@@ -616,3 +616,33 @@ Implement input and output validation across all RAG workflows. Additionally, te
 
 
 In this create middleware for input and output validation and add that validation in all rag and the endpoint will same as before
+
+
+
+Day 16:-
+
+
+
+Execute a stress test of 100 consecutive requests to the main LLM/RAG endpoint, identify any crashes, hangs, or resource leaks, and ensure the system handles all requests successfully after fixes.
+
+Test Approach
+Created a stress test script to send 100 requests (with small concurrency).
+Captured:
+Status Code
+Response Time (Latency)
+Errors / Failures
+Ran an initial baseline test to identify issues.
+Issue Identified
+During the baseline run, the system experienced a crash under load.
+Root cause:
+Improper error handling / resource handling (e.g., timeout, memory, or unhandled promise).
+Impact:
+Some requests failed and service stability was affected.
+Fix Implemented
+Added proper:
+Error handling
+Timeout handling
+Resource cleanup (no memory leak)
+Ensured:
+Service does not crash even under load
+All failures are handled as controlled errors
