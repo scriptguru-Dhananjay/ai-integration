@@ -3,6 +3,14 @@ import { emailAnalyze } from "../services/openaiEmailService.js";
 
 const router = express.Router();
 
+
+router.get("/health", (req, res) => {
+        res.status(200).json({
+          status : "Live"
+        })
+})
+
+
 router.post("/analyze", async (req, res) => {
   const start = Date.now();
 
