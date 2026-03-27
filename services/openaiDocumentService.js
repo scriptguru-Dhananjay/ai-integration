@@ -5,6 +5,11 @@ const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
+const PRICING = {
+    input: 0.00015,
+    output: 0.0006,
+}
+
 export async function askDocument(question) {
     if (!process.env.OPENAI_API_KEY) {
         throw { status: 500, message: "OPEN AI key is missing" };
@@ -88,6 +93,12 @@ export async function askDocument(question) {
 
     console.log("Tokens usage", tokens);
 
+     const costUsd =
+        (tokens.prompt / 1000) * PRICING.input +
+        (tokens.completion / 1000) * PRICING.output;
+
+        console.log("Cost", costUsd);
+
     const content = response.choices[0].message.content;
 
     let parsed;
@@ -106,5 +117,6 @@ export async function askDocument(question) {
     return {
         ...parsed,
         tokens,
+         costUsd: Number(costUsd.toFixed(6)),
     };
 }

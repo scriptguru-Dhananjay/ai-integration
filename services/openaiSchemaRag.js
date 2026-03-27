@@ -6,6 +6,12 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
+
+const PRICING = {
+    input: 0.00015,
+    output: 0.0006,
+};
+
 const ragSchema = {
   name: "rag_answer",
   schema: {
@@ -119,6 +125,12 @@ ${question}
       };
       console.log("Tokens usage:", tokens);
 
+      const costUsd =
+        (tokens.prompt / 1000) * PRICING.input +
+        (tokens.completion / 1000) * PRICING.output;
+
+        console.log("Cost", costUsd);
+
       const content = res.choices[0].message.content;
       const parsed = JSON.parse(content);
 
@@ -128,7 +140,8 @@ ${question}
 
       return {
         ...parsed,
-        attempts
+        attempts,
+        costUsd: Number(costUsd.toFixed(6)),
       };
 
     } catch (err) {

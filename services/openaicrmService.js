@@ -4,6 +4,11 @@ const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
+const PRICING = {
+    input: 0.00015,
+    output: 0.0006,
+}
+
 export async function analyzeLead({ name, company, notes }) {
     if (!name || !company || !notes) {
         throw { status: 400, message: "Required filed missing" };
@@ -76,6 +81,12 @@ ${notes}
 
     console.log("Tokens Usage", tokens);
 
+
+    const costUsd = (tokens.prompt / 1000) * PRICING.input +
+        (tokens.completions / 1000) * PRICING.output;
+
+        console.log("Cost", costUsd);
+
     const content = response.choices[0].message.content;
 
     let parsed;
@@ -89,5 +100,6 @@ ${notes}
     return {
         ...parsed,
         tokens,
+        costUsd: Number(costUsd.toFixed(6)),
     };
 }

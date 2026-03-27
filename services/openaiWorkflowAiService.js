@@ -5,6 +5,10 @@ const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
+const PRICING = {
+    input: 0.00015,
+    output: 0.0006,
+};
 
 export async function processTicket(rawText) {
     if (!rawText) {
@@ -83,6 +87,12 @@ Return JSON only.
 
     console.log("Tokens Usage", tokens);
 
+    const costUsd =
+        (tokens.prompt / 1000) * PRICING.input +
+        (tokens.completion / 1000) * PRICING.output;
+
+        console.log("Cost", costUsd);
+
     const content = response.choices[0].message.content;
 
     let parsed;
@@ -97,6 +107,7 @@ Return JSON only.
     return {
         ...parsed,
         tokens,
+        costUsd: Number(costUsd.toFixed(6)),
     }
 
 }

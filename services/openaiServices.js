@@ -4,6 +4,11 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const PRICING = {
+    input: 0.00015,
+    output: 0.0006,
+};
+
 export async function callOpenAI(message) {
   try {
     if (!process.env.OPENAI_API_KEY) {
@@ -32,9 +37,16 @@ export async function callOpenAI(message) {
 
     console.log("Token Usage:", tokens);
 
+     const costUsd =
+        (tokens.prompt / 1000) * PRICING.input +
+        (tokens.completion / 1000) * PRICING.output;
+
+        console.log("Cost", costUsd);
+
     return {
       content,
       tokens,
+      costUsd: Number(costUsd.toFixed(6)),
     };
   } catch (error) {
     if (error.status === 401) {

@@ -4,6 +4,11 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const PRICING = {
+    input: 0.00015,
+    output: 0.0006,
+};
+
 export async function extractStructuredData(text) {
   if (!process.env.OPENAI_API_KEY) {
     throw { status: 500, message: "OpenAI API key is missing" };
@@ -76,6 +81,12 @@ export async function extractStructuredData(text) {
 
   console.log("Tokens usage",tokens);
 
+  const costUsd =
+        (tokens.prompt / 1000) * PRICING.input +
+        (tokens.completion / 1000) * PRICING.output;
+
+        console.log("Cost", costUsd);
+
 
   let parsed;
   try {
@@ -90,6 +101,7 @@ export async function extractStructuredData(text) {
   return {
     data: parsed,
     tokens,
+    costUsd: Number(costUsd.toFixed(6)),
   };
 }
 

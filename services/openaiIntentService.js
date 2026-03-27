@@ -6,6 +6,11 @@ const client = new OpenAI({
 
 const leads = [];
 
+const PRICING = {
+    input: 0.00015,
+    output: 0.0006,
+};
+
 export async function intentDetect(text) {
     if (!process.env.OPENAI_API_KEY) {
         throw { status: 500, message: "OPEN AI api key is missing" };
@@ -73,6 +78,12 @@ export async function intentDetect(text) {
 
     console.log("Tokens usage", tokens);
 
+    const costUsd =
+        (tokens.prompt / 1000) * PRICING.input +
+        (tokens.completion / 1000) * PRICING.output;
+
+        console.log("Cost", costUsd);
+
     const message = response.choices[0].message;
 
     if (message.tool_calls?.length) {
@@ -95,6 +106,7 @@ export async function intentDetect(text) {
                 action: "createLead",
                 args,
                 tokens,
+                costUsd: Number(costUsd.toFixed(6)),
             };
         }
     }
@@ -102,6 +114,7 @@ export async function intentDetect(text) {
     return {
         action: "none",
         tokens,
+        costUsd: Number(costUsd.toFixed(6)),
     };
 }
 
