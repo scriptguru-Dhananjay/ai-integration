@@ -18,6 +18,7 @@ import uploadRouteDoc from "./routes/uploadDoc.js";
 import askRagRoute from "./routes/askRag.js";
 import ragRoute from "./routes/rag.js";
 import askllmRoute from "./routes/askllm.js";
+import emailAnalyzeRoute from "./routes/emailAnalyze.js"
 
 
 const app = express();
@@ -52,6 +53,7 @@ app.use("/uploadDoc", uploadRouteDoc);
 app.use("/askRag", askRagRoute);
 app.use("/rag",ragRoute);
 app.use("/askllm", askllmRoute);
+app.use("/emailAnalyze", emailAnalyzeRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);
